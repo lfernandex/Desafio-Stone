@@ -1,6 +1,8 @@
 package com.fernandes.stone.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +16,14 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> find(String name, Pageable pageable){
+
+        Page<Product> prod = repository.findAll(pageable);
+        
+        return prod.map(x -> new ProductDTO(x));
+    }
+
     @Transactional
     public ProductDTO insert(ProductDTO dto){
 
@@ -25,8 +35,6 @@ public class ProductService {
 
         return new ProductDTO(entity);
     }
-
-
 
     private void copyFromDTO (Product prod, ProductDTO dto){
         prod.setTitle(dto.getTitle());
