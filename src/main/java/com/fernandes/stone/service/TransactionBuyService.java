@@ -35,7 +35,8 @@ public class TransactionBuyService {
     }
 
     private void copyFromDto(TransactionBuy entity, TransactionBuyDTO dto){
-        
+            
+            entity.setClientId(dto.getClientId());
             entity.setClientName(dto.getClientName());
             entity.setTotalToPay(dto.getTotalToPay());
     }
