@@ -1,16 +1,12 @@
 package com.fernandes.stone.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,22 +20,21 @@ public class TransactionBuy{
     private String clientName;
     private Integer totalToPay;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tb_trans_cred",
-        joinColumns = @JoinColumn(name = "transaction_id"),
-        inverseJoinColumns = @JoinColumn(name = "credito_id"))
-    private List<CrediCard> cards = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "crediCardID")
+    private CrediCard crediCard;
 
 
     public TransactionBuy(){
         
     }
 
-    public TransactionBuy(Long id, String clientId, String clientName, Integer totalToPay) {
+    public TransactionBuy(Long id, String clientId, String clientName, Integer totalToPay, CrediCard crediCard) {
         this.id = id;
         this.clientId = clientId;
         this.clientName = clientName;
         this.totalToPay = totalToPay;
+        this.crediCard = crediCard;
     }
 
     public Long getId() {
@@ -74,9 +69,12 @@ public class TransactionBuy{
         this.totalToPay = totalToPay;
     }
 
-    public List<CrediCard> getCards() {
-        return cards;
+    public CrediCard getCrediCard() {
+        return crediCard;
     }
 
- 
+    public void setCrediCard(CrediCard crediCard) {
+        this.crediCard = crediCard;
+    }
+
 }

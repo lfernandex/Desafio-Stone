@@ -1,9 +1,5 @@
 package com.fernandes.stone.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.fernandes.stone.entities.CrediCard;
 import com.fernandes.stone.entities.TransactionBuy;
 
 public class TransactionBuyDTO{
@@ -13,16 +9,17 @@ public class TransactionBuyDTO{
     private String clientName;
     private Integer totalToPay;
 
-    private List<CrediCardDTO> cards = new ArrayList<>();
+    private CrediCardDTO credito;
 
     public TransactionBuyDTO(){
     }
 
-    public TransactionBuyDTO(Long id, String clientId, String clientName, Integer totalToPay) {
+    public TransactionBuyDTO(Long id, String clientId, String clientName, Integer totalToPay, CrediCardDTO credito) {
         this.id = id;
         this.clientId = clientId;
         this.clientName = clientName;
         this.totalToPay = totalToPay;
+        this.credito = credito;
     }
 
     public TransactionBuyDTO(TransactionBuy entity) {
@@ -30,21 +27,7 @@ public class TransactionBuyDTO{
         clientId = entity.getClientId();
         clientName = entity.getClientName();
         totalToPay = entity.getTotalToPay();
-    
-        List<CrediCardDTO> cardDTOs = new ArrayList<>();
-    
-        for (CrediCard card : entity.getCards()) {
-            CrediCardDTO cardDTO = new CrediCardDTO();
-            cardDTO.setCardNumber(card.getCardNumber());
-            cardDTO.setCardHolderName(card.getCardHolderName());
-            cardDTO.setValue(card.getValueBuy());
-            cardDTO.setCvv(card.getCvv());
-            cardDTO.setExpDate(card.getExpDate());
-    
-            cardDTOs.add(cardDTO);
-        }
-    
-        cards = cardDTOs;
+        credito = (entity.getCrediCard() == null) ? null : new CrediCardDTO(entity.getCrediCard());
     }
 
     public Long getId() {
@@ -79,8 +62,12 @@ public class TransactionBuyDTO{
         this.totalToPay = totalToPay;
     }
 
-    public List<CrediCardDTO> getCards() {
-        return cards;
+    public CrediCardDTO getCredito() {
+        return credito;
+    }
+
+    public void setCredito(CrediCardDTO credito) {
+        this.credito = credito;
     }
 
 }

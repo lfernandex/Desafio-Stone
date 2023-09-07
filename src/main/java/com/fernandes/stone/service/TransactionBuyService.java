@@ -24,25 +24,28 @@ public class TransactionBuyService {
 
         copyFromDto(entity, dto);
 
+        CrediCard card = new CrediCard();
+        copyCrediCardFromDto(card, dto.getCredito());
+
+        entity.setCrediCard(card);
+
         entity = repository.save(entity);
 
         return new TransactionBuyDTO(entity);    
     }
 
     private void copyFromDto(TransactionBuy entity, TransactionBuyDTO dto){
-            
-            entity.setClientId(dto.getClientId());
+        
             entity.setClientName(dto.getClientName());
             entity.setTotalToPay(dto.getTotalToPay());
-            
-            entity.getCards().clear();
+    }
 
-            for (CrediCardDTO cardDTO : dto.getCards()){
-                CrediCard card = new CrediCard();
-                card.setId(cardDTO.getId());
-                entity.getCards().add(card);
-            }
-
+    private void copyCrediCardFromDto(CrediCard crediCard, CrediCardDTO dto) {
+        crediCard.setCardNumber(dto.getCardNumber());
+        crediCard.setCardHolderName(dto.getCardHolderName());
+        crediCard.setValueBuy(dto.getValueBuy());
+        crediCard.setCvv(dto.getCvv());
+        crediCard.setExpDate(dto.getExpDate());
     }
 
 }
