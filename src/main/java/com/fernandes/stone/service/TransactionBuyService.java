@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fernandes.stone.dto.CrediCardDTO;
 import com.fernandes.stone.dto.TransactionBuyDTO;
@@ -13,8 +14,7 @@ import com.fernandes.stone.entities.TransactionBuy;
 import com.fernandes.stone.entities.TransactionGet;
 import com.fernandes.stone.repository.TransactionBuyRepository;
 import com.fernandes.stone.repository.TransactionGetRepositoy;
-
-import jakarta.transaction.Transactional;
+import com.fernandes.stone.service.exception.ResourceNotFoundException;
 
 @Service
 public class TransactionBuyService {
@@ -24,6 +24,17 @@ public class TransactionBuyService {
     
     @Autowired
     private TransactionGetRepositoy getRepository;
+
+    @Transactional(readOnly = true)
+    public Page<TransactionGetDTO> findByClientId(String clientId, Pageable pageable) {
+
+    Page<TransactionGet> transactions = getRepository.searchByClientId(clientId, pageable);
+        if (transactions == null) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        return transactions.map(TransactionGetDTO::new);
+    }
+
 
     @Transactional
     public Page<TransactionGetDTO> findAll (TransactionGetDTO dto, Pageable pageable){

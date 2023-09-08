@@ -4,9 +4,11 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,16 @@ public class CrediCardController {
 
     @Autowired
     private TransactionBuyService service;
+
+
+    @GetMapping(value = "/history/{clientId}")
+    public ResponseEntity<Page<TransactionGetDTO>> findById(@PathVariable String clientId, Pageable pageable){
+
+        Pageable pageables = PageRequest.of(0, 2);
+
+        Page<TransactionGetDTO> dto = service.findByClientId(clientId, pageables);
+        return ResponseEntity.ok(dto);
+    }
 
     @GetMapping(value = "/history")
     public ResponseEntity<Page<TransactionGetDTO>> findAll(TransactionGetDTO dto, Pageable pageable){
