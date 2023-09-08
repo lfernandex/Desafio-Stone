@@ -26,7 +26,7 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping(value = "/products")
-    public ResponseEntity<Page<ProductDTO>> insert (String name, Pageable pageable){
+    public ResponseEntity<Page<ProductDTO>> find (String name, Pageable pageable){
         Page<ProductDTO> prod = service.find(name, pageable);
         return ResponseEntity.ok(prod);
     }

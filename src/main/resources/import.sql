@@ -1,0 +1,3 @@
+INSERT INTO tb_transget (client_id, purchase_id, value_buy, date_buy, card_number) VALUES ('7e655c6e-e8e5-4349-8348-e51e0ff3072e', '569c30dc-6bdb-407a-b18b-3794f9b206a8', 1234, '19/08/2016', '**** **** **** 1234');
+INSERT INTO tb_transget (client_id, purchase_id, value_buy, date_buy, card_number) VALUES ('7e655c6e-e8e5-4349-8348-e51e0ff3072e', '569c30dc-6bdb-407a-b18b-3794f9b206a8', 1234, '19/08/2016', '**** **** **** 1234');
+INSERT INTO tb_transget (client_id, purchase_id, value_buy, date_buy, card_number) VALUES ('7e655c6e-e8e5-4349-8348-e51e0ff3072e', '569c30dc-6bdb-407a-b18b-3794f9b206a8', 1234, '19/08/2016', '**** **** **** 1234');
